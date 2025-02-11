@@ -3,19 +3,18 @@ import mongoose from "mongoose";
 //defining Schema class
 const Schema = mongoose.Schema;
 
-
 //enum user role
-enum Role{
+enum Role {
   Student = "student",
-  Admin = "admin"
+  Admin = "admin",
 }
 
 //interface user
-interface IUser extends Document{
-  username : string,
-  profileImage : string,
-  email : string,
-  role : Role
+interface IUser extends Document {
+  username: string;
+  profileImage: string;
+  email: string;
+  role: Role;
 }
 
 //creating new object from above class providing object which is the structure of table and assigning into variable
@@ -23,16 +22,16 @@ const userSchema = new Schema<IUser>({
   //userName: String -- if no other attributes
   username: {
     type: String,
-    required : true
+    required: true,
   },
   email: {
     type: String,
-    required : true
+    required: true,
   },
-  role : {
+  role: {
     type: String,
     enum: [Role.Student, Role.Admin],
-    default: Role.Student
+    default: Role.Student,
   },
   profileImage: {
     type: String,
