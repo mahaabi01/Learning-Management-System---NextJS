@@ -3,22 +3,41 @@ import mongoose from "mongoose";
 //defining Schema class
 const Schema = mongoose.Schema;
 
+
+//enum user role
+enum Role{
+  Student = "student",
+  Admin = "admin"
+}
+
+//interface user
+interface IUser extends Document{
+  username : string,
+  profileImage : string,
+  email : string,
+  role : Role
+}
+
 //creating new object from above class providing object which is the structure of table and assigning into variable
-const userSchema = new Schema({
+const userSchema = new Schema<IUser>({
   //userName: String -- if no other attributes
-  userName: {
+  username: {
     type: String,
+    required : true
   },
   email: {
     type: String,
+    required : true
   },
-  googleId: {
+  role : {
     type: String,
+    enum: [Role.Student, Role.Admin],
+    default: Role.Student
   },
   profileImage: {
     type: String,
   },
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;
