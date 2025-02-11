@@ -4,13 +4,13 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 //enum user role
-enum Role {
+export enum Role {
   Student = "student",
   Admin = "admin",
 }
 
 //interface user
-interface IUser extends Document {
+export interface IUser extends Document {
   username: string;
   profileImage: string;
   email: string;

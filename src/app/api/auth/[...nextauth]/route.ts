@@ -1,9 +1,9 @@
 import dbConnect from "@/database/connection";
 import User from "@/database/models/user.schema";
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-const handler = NextAuth({
+export const authOptions: AuthOptions = {
   //which platform using for login
   providers: [
     GoogleProvider({
@@ -16,24 +16,31 @@ const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   //modify signIn function
   callbacks: {
-    async signIn({ user }) : Promise<boolean> {
+    async signIn({ user }): Promise<boolean> {
       try {
         await dbConnect();
         const existingUser = await User.findOne({ email: user.email });
-        if(!existingUser){
+        if (!existingUser) {
           await User.create({
-            username : user.name,
-            email : user.email,
-            profileImage : user.image
-          })
+            username: user.name,
+            email: user.email,
+            profileImage: user.image,
+          });
         }
-        return true
+        return true;
       } catch (error) {
-        console.log(error)
-        return false
+        console.log(error);
+        return false;
       }
     },
+    async session({session, user}){
+      const data = await User.findById(user.id)
+      session.user.role = data.role || "student"  // if role is not found then student is set
+      return session
+    }
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
