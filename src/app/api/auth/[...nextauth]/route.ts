@@ -1,6 +1,6 @@
 import dbConnect from "@/database/connection";
 import User from "@/database/models/user.schema";
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: AuthOptions = {
@@ -16,7 +16,7 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   //modify signIn function
   callbacks: {
-    async signIn({ user }): Promise<boolean> {
+    async signIn({user}:{user : {name: string, email: string, image: string}}): Promise<boolean> {
       try {
         await dbConnect();
         const existingUser = await User.findOne({ email: user.email });
@@ -33,9 +33,9 @@ export const authOptions: AuthOptions = {
         return false;
       }
     },
-    async session({session, user}){
+    async session({session, user}:{session:Session, user: any}){
       const data = await User.findById(user.id)
-      session.user.role = data.role || "student"  // if role is not found then student is set
+      session.user.role = data?.role || "student"  // if role is not found then student is set
       return session
     }
   },

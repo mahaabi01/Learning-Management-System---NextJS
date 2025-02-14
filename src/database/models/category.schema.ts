@@ -1,6 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
-interface Icategory extends Document{
+export interface Icategory extends Document{
   name: string,
   description?: string,
   createdAt: Date,
