@@ -1,4 +1,4 @@
-import AdminSidebar from "../sidebar/Admin-Sidebar copy"
+import AdminSidebar from "../sidebar/Admin-Side"
 import Sidebar from "../sidebar/Student-Sidebar"
 
 
