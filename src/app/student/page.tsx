@@ -1,7 +1,11 @@
 import Dashboard from "@/components/dashboard/Dashboard";
 
 function Admin() {
-  return <Dashboard />;
+  return (
+    <>
+      <Dashboard />;
+    </>
+  );
 }
 
 export default Admin;

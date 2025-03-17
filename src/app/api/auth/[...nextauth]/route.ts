@@ -1,8 +1,11 @@
 import dbConnect from "@/database/connection";
 import User from "@/database/models/user.schema";
-import NextAuth, { AuthOptions, Session } from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+interface IToken{name: string, email: string, picture: string, id: string, role:string}
+
+//@ts-ignore
 export const authOptions: AuthOptions = {
   //which platform using for login
   providers: [
@@ -33,14 +36,28 @@ export const authOptions: AuthOptions = {
         return false;
       }
     },
-    async session({session, user}:{session:Session, user: any}){
-      const data = await User.findById(user.id)
-      session.user.role = data?.role || "student"  // if role is not found then student is set
+    async jwt({token}:{token: IToken}){
+      await dbConnect()
+      const user = await User.findOne({
+        email: token.email
+      })
+      console.log(user, "USER")
+      if(user){
+        token.id = user._id
+        token.role = user.role
+      }
+      return token
+    },
+    async session({session, token}:{session:Session, token: IToken}){
+      if(token){
+        session.user.id = token.id;
+        session.user.role = token.role 
+      }
       return session
     }
   },
 };
 
+//@ts-ignore
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };
