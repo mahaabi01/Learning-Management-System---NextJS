@@ -19,18 +19,18 @@ const authMiddleware = async (req: NextRequest) => {
   return NextResponse.next()
 }
 
-export const checkLoggedInorNotMiddleware = async (req: NextRequest) => {
-  //check if user log in or not - checking logic - if there is user session then the user is logged in otherwise user is not logged in
-  const session = await getServerSession(authOptions)
-  if(!session){
-    return Response.json({
-      message: "You must logged in."
-    }, {
-      status: 401
-    })
-  }
-  return NextResponse.next()
-}
+// export const checkLoggedInorNotMiddleware = async (req: NextRequest) => {
+//   //check if user log in or not - checking logic - if there is user session then the user is logged in otherwise user is not logged in
+//   const session = await getServerSession(authOptions)
+//   if(!session){
+//     return Response.json({
+//       message: "You must logged in."
+//     }, {
+//       status: 401
+//     })
+//   }
+//   return NextResponse.next()
+// }
 
 export default authMiddleware
 

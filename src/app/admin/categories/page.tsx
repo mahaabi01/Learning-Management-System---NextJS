@@ -26,11 +26,11 @@ function Categories() {
     dispatch(fetchCategories());
   }, []);
 
-  //filterdCategories for filter the searched categories
-  const filteredCategories = categories.filer(
+  //filtering categories
+  const filteredCategories = categories.filter(
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      categories._id.toLowerCase().includes(searchTerm.toLowerCase())
+      category._id.toLowerCase().include(searchTerm.toLowerCase())
   );
   return (
     <div className="flex flex-col">
@@ -198,5 +198,3 @@ function Categories() {
     </div>
   );
 }
-
-export default Categories;

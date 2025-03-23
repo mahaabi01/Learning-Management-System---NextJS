@@ -51,7 +51,6 @@ const Modal: React.FC<IModalProps> = ({ closeModal, courseId }) => {
       dispatch(resetStatus());
     }
   }, [status]);
-
   return (
     <div
       id="modal"
@@ -177,3 +176,5 @@ const Modal: React.FC<IModalProps> = ({ closeModal, courseId }) => {
     </div>
   );
 };
+
+export default Modal
