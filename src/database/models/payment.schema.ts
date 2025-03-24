@@ -14,6 +14,11 @@ interface IPayment extends Document{
   status: Status
 }
 
+export enum PaymentMethod{
+  Khalti = "khalti",
+  Esewa = "esewa"
+}
+
 const paymentSchema = new Schema<IPayment>({
   student: {
     type: Schema.Types.ObjectId,

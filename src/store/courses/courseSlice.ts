@@ -3,6 +3,13 @@ import { Status } from "../category/types";
 import { ICourse, ICourseForData, IInitialData } from "./types";
 import { AppDispatch } from "../store";
 import API from "@/http";
+import { PaymentMethod } from "@/database/models/payment.schema";
+
+export interface IEnrollmentData{
+  whatsapp: string,
+  course: string,
+  paymentMethod: PaymentMethod
+}
 
 const data: IInitialData = {
   courses: [],

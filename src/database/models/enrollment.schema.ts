@@ -1,9 +1,17 @@
 import mongoose, { Schema } from "mongoose";
 
 interface IEnrollment extends Document {
-  student: mongoose.Types.ObjectId;
-  course: mongoose.Types.ObjectId;
-  enrolledAt: Date;
+  student: mongoose.Types.ObjectId,
+  course: mongoose.Types.ObjectId,
+  enrolledAt: Date,
+  enrollmentStatus: EnrollmentStatus,
+  whatsapp: string
+}
+
+export enum EnrollmentStatus{
+  Approve = "approve",
+  Reject = "reject",
+  Pending = "pending"
 }
 
 const enrollmentSchema = new Schema<IEnrollment>({
@@ -19,7 +27,13 @@ const enrollmentSchema = new Schema<IEnrollment>({
     type: Date,
     default: Date.now(),
   },
+  enrollmentStatus: {
+    type: String,
+    enum: [EnrollmentStatus.Approve, EnrollmentStatus.Pending, EnrollmentStatus.Reject],
+    default: EnrollmentStatus.Pending
+  },
+  whatsapp: String
 });
 
-const Enrollment = mongoose.model("Enrollment", enrollmentSchema);
+const Enrollment = mongoose.models.Enrollment || mongoose.model("Enrollment", enrollmentSchema);
 export default Enrollment;
