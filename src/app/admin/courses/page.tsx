@@ -22,3 +22,5 @@ function Courses() {
       course.category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 }
+
+export default Courses
