@@ -1,7 +1,7 @@
 import { PaymentMethod } from "@/database/models/payment.schema";
 import { Status } from "@/store/category/types";
 import { enrollCourse } from "@/store/enrollments/enrollmentSlice";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ChangeEvent, useEffect, useState } from "react"
 
 interface IModalProps{
@@ -72,3 +72,5 @@ const Modal:React.FC<IModalProps> = ({closeModal, courseId})=>{
       </div>
   )
 }
+
+export default Modal
