@@ -24,7 +24,7 @@ export async function createLesson(req:Request){
   }
 }
 
-export async function fetchLesson(req:Request){
+export async function fetchLessons(req:Request){
   try{
     await dbConnect()
     const {searchParams} = new URL(req.url)
@@ -32,7 +32,7 @@ export async function fetchLesson(req:Request){
 
     console.log(courseId, "IUD")
     const data = await Lesson.find({
-      course.courseId
+      course:courseId
     }).populate("course")
     if(data.length === 0){
       return Response.json({
@@ -52,7 +52,7 @@ export async function fetchLesson(req:Request){
   }
 }
 
-async function fetchLesson(id:Request){
+export async function fetchLesson(id:string){
   try{
     await dbConnect()
     const data = await Lesson.findById(id)
