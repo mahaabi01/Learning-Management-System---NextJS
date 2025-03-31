@@ -5,7 +5,7 @@ export async function fetchStudents(){
     const students = await User.find({
       role: Role.Student
     })
-    if(student.length === 0){
+    if(students.length === 0){
       return Response.json({
         message: "No students found.",
         data: []

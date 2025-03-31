@@ -62,33 +62,11 @@ export async function fetchCourses() {
   }
 }
 
-export async function fetchCourses() {
-  try {
+export async function fetchCourse(id: string){
+  try{
     await dbConnect();
-    const data = await Course.find().populate("category");
-    if (data.length === 0) {
-      return Response.json(
-        {
-          message: "no course found",
-        },
-        { status: 404 }
-      );
-    }
-    return Response.json(
-      {
-        message: "courses fetched !!",
-        data,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.log(error);
-    return Response.json(
-      {
-        message: "Something went wrong",
-      },
-      { status: 500 }
-    );
+    const data = await Course.findById(id)
+    
   }
 }
 
