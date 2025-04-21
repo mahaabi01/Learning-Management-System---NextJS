@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useState } from "react"
 import { ICategoryInitialState, Status } from "./types";
 import { AppDispatch } from "../store";
 import API from "@/http";
@@ -8,7 +7,6 @@ const datas : ICategoryInitialState = {
   categories: [],
   status: Status.Loading
 }
-
 
 const categorySlice = createSlice({ //returns objects consist of key value pair
   name: "category",
@@ -86,6 +84,7 @@ export function deleteCategory(id:string){
         dispatch(setStatus(Status.Error))
       }
     }catch(error){
+      console.log(error)
       dispatch(setStatus(Status.Error))
     }
   }

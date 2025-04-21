@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { Status } from "../category/types"
-import { IInitialData, I } from "../courses/types"
 import { IInitialData, ILesson, ILessonForData } from "./types"
 import API from "@/http"
 import { AppDispatch } from "../store"
@@ -14,7 +13,7 @@ const lessonSlice = createSlice({
   name : "lessons",
   initialState : data,
   reducers : {
-    setStatus(state:InitialData, action:PayloadAction<Status>){
+    setStatus(state:IInitialData, action:PayloadAction<Status>){
       state.status = action.payload
     },
     setLessons(state:IInitialData, action:PayloadAction<ILesson[]>){
@@ -23,8 +22,8 @@ const lessonSlice = createSlice({
     pushToLessons(state:IInitialData, action:PayloadAction<ILesson>){
       state.lessons.push(action.payload)
     },
-    deleteLessonByIndex(state:IInitialData, action:PayloadACtion<string>){
-      const index = state.lessons.findIndex((lesson)=>lesson,_id == action.payload)
+    deleteLessonByIndex(state:IInitialData, action:PayloadAction<string>){
+      const index = state.lessons.findIndex((lesson)=>lesson._id == action.payload)
       if(index!== -1){
         state.lessons.splice(index,1)
       }
@@ -41,7 +40,7 @@ export default lessonSlice.reducer
 export function fetchLessons(id:string){
   return async function fetchLessonsThunk(dispatch:AppDispatch){
     try{
-      const response = await API.get("/lessons?courseId=", id)
+      const response = await API.get("/lessons?courseId="+ id)
       if(response.status == 200){
         dispatch(setLessons(response.data.data))
       }else{
@@ -62,9 +61,6 @@ export function createLesson(data:ILessonForData){
       if(response.status == 201){
         dispatch(setStatus(Status.Success))
         dispatch(pushToLessons(response.data.data))
-      }else{
-        dispatch(setStatus(Status.Success))
-        dispatch(pushToLessons (response.data.data))
       }else{
         dispatch(setStatus(Status.Error))
       }

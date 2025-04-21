@@ -80,7 +80,7 @@ export function changeEnrollmentStatus(status:EnrollmentStatus, id:string){
       }
     }catch(error){
       console.log(error)
-      dispatch(setStatus(Status,Error))
+      dispatch(setStatus(Status.Error))
     }
   }
 }

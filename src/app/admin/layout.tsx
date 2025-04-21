@@ -6,11 +6,12 @@ import { useEffect } from "react"
 
 function AdminLayout({children}:Readonly<{children:React.ReactNode}>){
   const {data:session, status} = useSession()
+  // console.log("Status:", status)
+  console.log("Session: ", session)
   useEffect(()=>{
-    console.log(status, "STATUS")
+    console.log("STATUS : ", status)
     if(status === "loading") return;
-
-    if(!session || session.user.role !== "admin"){
+    if(!session || session.user?.role !== "admin"){
       redirect("/")
     }
   },[session,status])
